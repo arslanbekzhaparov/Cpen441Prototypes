@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'MeetWe',
 }
 
+
 export default function RootLayout({
   children,
 }: {

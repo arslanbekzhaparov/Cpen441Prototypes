@@ -54,6 +54,7 @@ const SwiperContainer = styled.div`
   margin-left: 15px;
   width: 100%; /* Ensure full width of the container */
   height: 100%;
+  overflow: visible !important; /* Add this line to set overflow: visible */
 `;
 
 const Card = styled.div<{ isSelected: boolean }>`
@@ -134,10 +135,10 @@ const Home: React.FC = () => {
   };
 
   const getFormattedDate = (date: Date) => {
-    const options = {
-      month: 'short', // Use 'long' to include more letters in the month
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
       day: 'numeric',
-      weekday: 'short', // Use 'long' to include more letters in the day
+      weekday: 'short',
     };
     return date.toLocaleDateString('en-US', options);
   };
@@ -170,6 +171,7 @@ const Home: React.FC = () => {
       }
     });
   };
+  
 
   return (
     <Container>
@@ -188,7 +190,7 @@ const Home: React.FC = () => {
       </EditableTitle>
 
       <SwiperContainer>
-        <Swiper spaceBetween={5} slidesPerView={5} onSlideChange={handleSwiperSlideChange}>
+        <Swiper spaceBetween={5} slidesPerView={5} onSlideChange={handleSwiperSlideChange} className="custom-swiper-container">
           {swiperDates.map((date, index) => (
             <SwiperSlide key={index}>
               <Card
