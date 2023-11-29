@@ -1,9 +1,14 @@
 // pages/index.tsx
 'use client';
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import TimeSelector from '@components/time_input';
+import TimeZoneSelector from '@components/timezone';
+import Button from '@components/createButton';
+import Logo from '@images/logo.svg'
+
 
 // Styled components
 const Container = styled.div`
@@ -11,7 +16,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   background: linear-gradient(90deg, #29B689 0%, rgba(13, 47, 36, 0.80) 100%);
+  overflow:hidden;
 `;
 
 const EditableTitle = styled.div`
@@ -51,9 +58,9 @@ const TitleInput = styled.input`
 
 const SwiperContainer = styled.div`
   margin-top: 60px;
+  margin-bottom: 60px;
   margin-left: 15px;
   width: 100%; /* Ensure full width of the container */
-  height: 100%;
   overflow: visible !important; /* Add this line to set overflow: visible */
 `;
 
@@ -109,13 +116,104 @@ const DateText = styled.p<{ isBold: boolean }>`
   margin: 0;
 `;
 
-// Home component
+const TimeSelectorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+`;
+
+const TimeSelectorRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+const pulse = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
+// Define the changing gradient animation
+const changeGradient = keyframes`
+  0% {
+    background-size: 200% 100%;
+  }
+  50% {
+    background-size: 300% 100%;
+  }
+  100% {
+    background-size: 200% 100%;
+  }
+`;
+
+const ButtonText = styled.p`
+  background: linear-gradient(90deg, #279D50 20.95%, rgba(9, 35, 18, 0.69) 81.87%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${pulse} 2s linear infinite, ${changeGradient} 4s linear infinite; /* Apply both animations */
+`;
+
+const SuccessMessage = styled.p`
+  color: #279D50;
+  font-size: 16px;
+  margin-top: 10px;
+`;
+
+// Logo container component
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
+const LogoImg = styled.img`
+  /* Add styling for your logo image */
+  max-width: 100%;
+  max-height: 100%;
+`;
+
 // Home component
 const Home: React.FC = () => {
   const [isEditing, setEditing] = useState(false);
   const [eventName, setEventName] = useState('Add Event Name');
   const [swiperDates, setSwiperDates] = useState<Date[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  
+
+  const handleCreateEvent = () => {
+    // Handle the logic for creating a new event
+    console.log('Create New Event clicked!');
+    
+    // Set the state to indicate that the button has been clicked
+    setButtonClicked(true);
+  };
+  
+    // Render different content based on the button click
+    if (buttonClicked) {
+      return (
+        <LogoContainer>
+          <LogoImg src={Logo} alt="Logo" />
+        </LogoContainer>
+      );
+    }
 
   const handleTitleClick = () => {
     setEditing(true);
@@ -161,6 +259,16 @@ const Home: React.FC = () => {
     setSwiperDates([...swiperDates, newDate]);
   };
 
+  const handleTimeSelection = () => {
+    // Handle the time selection logic here
+    console.log('Time selected!');
+  };
+
+  const handleTimeZoneSelection = (timeZone: string) => {
+    // Handle the timezone selection logic here
+    console.log('Time Zone selected:', timeZone);
+  };
+
   const handleCardSelect = (index: number) => {
     // Toggle the selection status of the clicked card
     setSelectedCards((prevSelected) => {
@@ -171,7 +279,6 @@ const Home: React.FC = () => {
       }
     });
   };
-  
 
   return (
     <Container>
@@ -205,6 +312,22 @@ const Home: React.FC = () => {
           ))}
         </Swiper>
       </SwiperContainer>
+      <TimeSelectorContainer>
+        <TimeSelectorRow>
+          <TimeSelector label="From"  onSelect={handleTimeSelection} />
+        </TimeSelectorRow>
+        <TimeSelectorRow>
+          <TimeSelector label="To"  onSelect={handleTimeSelection} />
+        </TimeSelectorRow>
+        <TimeSelectorRow>
+        <TimeZoneSelector onSelect={handleTimeZoneSelection} />
+        </TimeSelectorRow>
+      </TimeSelectorContainer>
+      <ButtonContainer>
+        <Button onClick={handleCreateEvent}>
+          <ButtonText>Create New Event</ButtonText>
+        </Button>
+      </ButtonContainer>
     </Container>
   );
 };
