@@ -6,8 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import TimeSelector from '@components/time_input';
 import TimeZoneSelector from '@components/timezone';
-import Button from '@components/createButton';
-import Logo from '@images/logo.svg'
 
 
 // Styled components
@@ -189,31 +187,37 @@ const LogoImg = styled.img`
   max-height: 100%;
 `;
 
+const StyledButton = styled.button`
+  width: 284px;
+  height: 61px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: #ECEDF0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+//   background: linear-gradient(90deg, #279D50 20.95%, rgba(9, 35, 18, 0.69) 81.87%);
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   margin-top: auto; /* Push the button to the bottom */
+  color: linear-gradient(90deg, #279D50 20.95%, rgba(9, 35, 18, 0.69) 81.87%);
+`;
+
+
 // Home component
 const Home: React.FC = () => {
   const [isEditing, setEditing] = useState(false);
   const [eventName, setEventName] = useState('Add Event Name');
   const [swiperDates, setSwiperDates] = useState<Date[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const [buttonClicked, setButtonClicked] = useState(false);
-  
-
-  const handleCreateEvent = () => {
-    // Handle the logic for creating a new event
-    console.log('Create New Event clicked!');
-    
-    // Set the state to indicate that the button has been clicked
-    setButtonClicked(true);
-  };
-  
-    // Render different content based on the button click
-    if (buttonClicked) {
-      return (
-        <LogoContainer>
-          <LogoImg src={Logo} alt="Logo" />
-        </LogoContainer>
-      );
-    }
 
   const handleTitleClick = () => {
     setEditing(true);
@@ -324,9 +328,9 @@ const Home: React.FC = () => {
         </TimeSelectorRow>
       </TimeSelectorContainer>
       <ButtonContainer>
-        <Button>
+        <StyledButton>
           <ButtonText>Create New Event</ButtonText>
-        </Button>
+        </StyledButton>
       </ButtonContainer>
     </Container>
   );
