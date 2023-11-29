@@ -324,7 +324,7 @@ const Home: React.FC = () => {
         </TimeSelectorRow>
       </TimeSelectorContainer>
       <ButtonContainer>
-        <Button onClick={handleCreateEvent}>
+        <Button>
           <ButtonText>Create New Event</ButtonText>
         </Button>
       </ButtonContainer>
