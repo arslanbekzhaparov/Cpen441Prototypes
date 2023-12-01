@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import TimeSelector from '@components/time_input';
 import TimeZoneSelector from '@components/timezone';
+import Link from 'next/link'
 
 
 // Styled components
@@ -327,11 +328,13 @@ const Home: React.FC = () => {
         <TimeZoneSelector onSelect={handleTimeZoneSelection} />
         </TimeSelectorRow>
       </TimeSelectorContainer>
+      <Link href="https://asf21415125.framer.ai/">
       <ButtonContainer>
         <StyledButton>
           <ButtonText>Create New Event</ButtonText>
         </StyledButton>
       </ButtonContainer>
+      </Link>
     </Container>
   );
 };
