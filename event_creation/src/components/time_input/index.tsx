@@ -39,6 +39,7 @@ const Dropdown = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   z-index: 1;
+  color: #59616C;
 `;
 
 const TimeItem = styled.div`
